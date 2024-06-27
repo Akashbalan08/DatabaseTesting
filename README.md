@@ -185,6 +185,52 @@ VALUES
 (4, 'Wang', 'wang@example.com', '2024-06-23');
 
 ```
-## Additional BookStore Requirements
+## SQL Queries
+###### 1. Power writers (authors) with more than X books in the same genre published within the last X years.
+```
+SELECT a.author_id, a.author_name
+FROM Authors a
+JOIN Books b ON a.author_id = b.author_id
+WHERE b.book_publish_date >= (YEAR(CURRENT_DATE) - X)
+GROUP BY a.author_id, a.author_name
+HAVING COUNT(DISTINCT b.book_id) > X;
+```
+
+###### 2. Loyal Customers who has spent more than X dollars in the last year.
+```
+SELECT c.customer_id, c.customer_name
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id
+WHERE o.order_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)
+GROUP BY c.customer_id, c.customer_name
+HAVING SUM(o.order_total_amount) > X;
+```
+
+###### 3. Well Reviewed books that has a better user rating than average.
+```
+SELECT b.book_id, b.book_title
+FROM Books b
+JOIN Reviews r ON b.book_id = r.book_id
+GROUP BY b.book_id, b.book_title
+HAVING AVG(r.review_rating) > (SELECT AVG(review_rating) FROM reviews);
+```
+###### 4. The most popular genre by sales.
+```
+SELECT b.book_genre, SUM(oi.order_item_quantity) AS total_sales
+FROM OrderItems oi
+JOIN Books b ON oi.book_id = b.book_id
+GROUP BY b.book_genre
+ORDER BY total_sales DESC
+LIMIT 1;
+```
+###### 5. The 10 most recent posted reviews by customers.
+```
+SELECT  c.customer_name, r.review_comment
+FROM Reviews r
+JOIN Customers c ON r.customer_id = c.customer_id
+JOIN Books b ON r.book_id = b.book_id
+ORDER BY r.review_date DESC
+LIMIT 10;
+```
 
 
