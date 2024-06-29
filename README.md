@@ -232,5 +232,22 @@ JOIN Books b ON r.book_id = b.book_id
 ORDER BY r.review_date DESC
 LIMIT 10;
 ```
+## Typescript Interface
+###### Customer Table
 
+```
+interface ICustomer {
+    customer_id: number;
+    customer_name: string;
+    customer_email: string;
+    customer_registration_date: Date;
+}
+
+interface ICustomerService {
+    addCustomer(customer: ICustomer): Promise<void>;
+    deleteCustomer(customer_id: number): Promise<void>;
+    updateCustomer(customer: ICustomer): Promise<void>;
+    getCustomer(customer_id: number): Promise<ICustomer | null>;
+}
+```
 
