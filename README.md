@@ -188,24 +188,23 @@ VALUES
 ## SQL Queries
 
 ###### 1. Power writers (authors) with more than X books in the same genre published within the last X years.
-
+```
 SELECT a.author_id, a.author_name
 FROM Authors a
 JOIN Books b ON a.author_id = b.author_id
 WHERE b.book_publish_date >= (YEAR(CURRENT_DATE) - X)
 GROUP BY a.author_id, a.author_name
 HAVING COUNT(DISTINCT b.book_id) > X;
-
-
+```
 ###### 2. Loyal Customers who has spent more than X dollars in the last year.
-
+```
 SELECT c.customer_id, c.customer_name
 FROM Customers c
 JOIN Orders o ON c.customer_id = o.customer_id
 WHERE o.order_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR)
 GROUP BY c.customer_id, c.customer_name
 HAVING SUM(o.order_total_amount) > X;
-
+```
 ###### 3. Well Reviewed books that has a better user rating than average.
 ```
 SELECT b.book_id, b.book_title
