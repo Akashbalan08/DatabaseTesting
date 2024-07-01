@@ -235,18 +235,67 @@ LIMIT 10;
 ###### Customer Table
 
 ```
+import { Pool } from 'pg'
+
+
 interface ICustomer {
     customer_id: number;
-    customer_name: string;
-    customer_email: string;
-    customer_registration_date: Date;
+    customer_name?: string;
+    customer_email?: string;
+    customer_registration_date?: Date;
 }
 
-interface ICustomerService {
-    addCustomer(customer: ICustomer): Promise<void>;
-    deleteCustomer(customer_id: number): Promise<void>;
-    updateCustomer(customer: ICustomer): Promise<void>;
-    getCustomer(customer_id: number): Promise<ICustomer | null>;
+// Database configuration
+const pool = new Pool({
+    user: '<username>', // add username
+    host: 'localhost',
+    database: '<dbName>', // add database name
+    password: '<password>',// add password
+    port: 5432,
+});
+
+// Updating customer records
+async function updateCustomer(customer: ICustomer): Promise<void> {
+    const { customer_id, customer_name, customer_email, customer_registration_date } = customer;
+
+    
+    let query = 'UPDATE Customers SET';
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    if (customer_name !== undefined) {
+        fields.push('customer_name = $' + (fields.length + 1));
+        values.push(customer_name);
+    }
+    if (customer_email !== undefined) {
+        fields.push('customer_email = $' + (fields.length + 1));
+        values.push(customer_email);
+    }
+    if (customer_registration_date !== undefined) {
+        fields.push('customer_registration_date = $' + (fields.length + 1));
+        values.push(customer_registration_date);
+    }
+
+    
+    if (fields.length === 0) {
+        throw new Error('There is no field to be updated');
+    }
+
+    query += ` ${fields.join(', ')} WHERE customer_id = $${fields.length + 1}`;
+    values.push(customer_id);
+
+   
+    await pool.query(query, values);
 }
+
+const customerUpdate: ICustomer = {
+    customer_id: 2,
+    customer_name: "Saju",
+    customer_email: "saju111@example.com"
+};
+
+updateCustomer(customerUpdate)
+    .then(() => console.log('Customer details updated.'))
+    .catch(error => console.error('Error occured while updating:', error));
 ```
 
