@@ -1,4 +1,4 @@
-# DatabaseTesting_Group3Midterm
+# DatabaseTesting
 # Online Book Store
 ###### The following project will consist of the design aspects of an Online Booke Store, that will be equipped with audio books, electronic books as well as physical books. The system will include Authors, publishers and customers, the customers will be able to browse through the catalog of the online book store, they will be able to purchase these books and leave reviews based on their purchases. 
 
