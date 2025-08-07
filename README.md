@@ -2,12 +2,6 @@
 # Online Book Store
 ###### The following project will consist of the design aspects of an Online Booke Store, that will be equipped with audio books, electronic books as well as physical books. The system will include Authors, publishers and customers, the customers will be able to browse through the catalog of the online book store, they will be able to purchase these books and leave reviews based on their purchases. 
 
-## Responsibilities
-
-* Akash Balan: Creating the database, DDL/DML
-* Saju: Book Store Requirements
-* Ruwini: Typescript
-
 ## Database Schema
 ###### The Database Schema will consist of the table information such as table names, fields, datatypes and the relationship between these entities, it will ask given an idea about the primary keys and foreign keys utilized in the system. The tables below will indicate name of the colmuns, The datatypes and if the corresponding attribute is a primary key or a foreign key.
 
